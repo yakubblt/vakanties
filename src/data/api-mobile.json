@@ -1,0 +1,112 @@
+{
+    "id": "94f2a45a-eefe-44a4-b4bb-33be9c260047",
+    "type": "schoolvakanties",
+    "canonical": "https://www.rijksoverheid.nl/onderwerpen/schoolvakanties/overzicht-schoolvakanties-per-schooljaar/overzicht-schoolvakanties-2025-2026",
+    "content": [
+        {
+            "title": "Overzicht schoolvakanties schooljaar 2025-2026",
+            "schoolyear": "2025-2026",
+            "vacations": [
+                {
+                    "type": "Herfstvakantie",
+                    "compulsorydates": "false",
+                    "regions": [
+                        {
+                            "region": "noord",
+                            "startdate": "2025-10-18T00:00:00.000Z",
+                            "enddate": "2025-10-26T22:59:00.000Z"
+                        },
+                        {
+                            "region": "midden",
+                            "startdate": "2025-10-18T00:00:00.000Z",
+                            "enddate": "2025-10-26T22:59:00.000Z"
+                        },
+                        {
+                            "region": "zuid",
+                            "startdate": "2025-10-11T00:00:00.000Z",
+                            "enddate": "2025-10-19T21:59:00.000Z"
+                        }
+                    ]
+                },
+                {
+                    "type": "Kerstvakantie",
+                    "compulsorydates": "true",
+                    "regions": [
+                        {
+                            "region": "heel Nederland",
+                            "startdate": "2025-12-20T00:00:00.000Z",
+                            "enddate": "2026-01-04T22:59:00.000Z"
+                        }
+                    ]
+                },
+                {
+                    "type": "Voorjaarsvakantie",
+                    "compulsorydates": "false",
+                    "regions": [
+                        {
+                            "region": "noord",
+                            "startdate": "2026-02-21T00:00:00.000Z",
+                            "enddate": "2026-03-01T22:59:00.000Z"
+                        },
+                        {
+                            "region": "midden",
+                            "startdate": "2026-02-14T00:00:00.000Z",
+                            "enddate": "2026-02-22T22:59:00.000Z"
+                        },
+                        {
+                            "region": "zuid",
+                            "startdate": "2026-02-14T00:00:00.000Z",
+                            "enddate": "2026-02-22T22:59:00.000Z"
+                        }
+                    ]
+                },
+                {
+                    "type": "Meivakantie",
+                    "compulsorydates": "false",
+                    "regions": [
+                        {
+                            "region": "heel Nederland",
+                            "startdate": "2026-04-25T00:00:00.000Z",
+                            "enddate": "2026-05-03T21:59:00.000Z"
+                        }
+                    ]
+                },
+                {
+                    "type": "Zomervakantie",
+                    "compulsorydates": "true",
+                    "regions": [
+                        {
+                            "region": "noord",
+                            "startdate": "2026-07-04T00:00:00.000Z",
+                            "enddate": "2026-08-16T21:59:00.000Z"
+                        },
+                        {
+                            "region": "midden",
+                            "startdate": "2026-07-18T00:00:00.000Z",
+                            "enddate": "2026-08-30T21:59:00.000Z"
+                        },
+                        {
+                            "region": "zuid",
+                            "startdate": "2026-07-11T00:00:00.000Z",
+                            "enddate": "2026-08-23T21:59:00.000Z"
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "notice": "Voor deze vakantie geeft het ministerie van OCW alleen adviesdata. Scholen mogen hier dus van afwijken.",
+    "authorities": [
+        "Ministerie van Onderwijs, Cultuur en Wetenschap"
+    ],
+    "creators": [
+        "Ministerie van Onderwijs, Cultuur en Wetenschap"
+    ],
+    "license": "CC0 1.0 Universal",
+    "rightsholders": [
+        "Ministerie van Algemene Zaken"
+    ],
+    "language": "nl-NL",
+    "location": "Nederland",
+    "lastmodified": "2025-05-07T06:58:41.060Z"
+}
