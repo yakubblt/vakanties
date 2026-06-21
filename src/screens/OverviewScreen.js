@@ -1,13 +1,14 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ScrollView, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { formatDate } from '../utils/formatDate';
 
 
 export default function OverviewScreen({ data, region }) {
- 
+  const window = useWindowDimensions();
+  const isLandscape = window.width > window.height;
   const content = data?.content?.[0];
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container, isLandscape && styles.containerLandscape]}>
      
       <Text style={styles.title}>{content?.title}</Text>
       
@@ -18,8 +19,9 @@ export default function OverviewScreen({ data, region }) {
       <Text style={styles.regionLabel}>Regio: {region}</Text>
 
       
-      {content?.vacations.map((vacation, index) => (
-        <View key={index} style={styles.card}>
+      <View style={[styles.cardGrid, isLandscape && styles.cardGridLandscape]}>
+        {content?.vacations.map((vacation, index) => (
+        <View key={index} style={[styles.card, isLandscape && styles.cardLandscape]}>
           
           <Text style={styles.vacationType}>{vacation.type}</Text>
           
@@ -38,7 +40,8 @@ export default function OverviewScreen({ data, region }) {
             </View>
           ))}
         </View>
-      ))}
+        ))}
+      </View>
     </ScrollView>
   );
 }
@@ -46,6 +49,10 @@ export default function OverviewScreen({ data, region }) {
 const styles = StyleSheet.create({
   container: {
     padding: 16,
+  },
+  containerLandscape: {
+    paddingHorizontal: 24,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 22,
@@ -68,6 +75,17 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderRadius: 10,
     backgroundColor: '#fff',
+  },
+  cardGrid: {
+    flexDirection: 'column',
+  },
+  cardGridLandscape: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  cardLandscape: {
+    width: '48.5%',
   },
   vacationType: {
     fontSize: 18,

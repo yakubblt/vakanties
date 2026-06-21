@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, StyleSheet, Text, useWindowDimensions, View } from 'react-native';
 import { formatDate } from '../utils/formatDate';
 
 const imageByType = {
@@ -32,6 +32,8 @@ function findNextVacation(data, region) {
 
 export default function CountdownScreen({ data, region }) {
 
+  const window = useWindowDimensions();
+  const isLandscape = window.width > window.height;
   const next = findNextVacation(data, region);
 
 
@@ -52,22 +54,21 @@ export default function CountdownScreen({ data, region }) {
   const imageUri = imageByType[next.vacation.type] || 'https://via.placeholder.com/320x180.png?text=Vakantie';
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Volgende vakantie</Text>
-      <Text style={styles.subtitle}>{next.vacation.type}</Text>
-      <Text style={styles.regionLabel}>Regio: {region}</Text>
+    <View style={[styles.container, isLandscape && styles.containerLandscape]}>
+      <Image source={{ uri: imageUri }} style={[styles.image, isLandscape && styles.imageLandscape]} />
 
+      <View style={[styles.infoPanel, isLandscape && styles.infoPanelLandscape]}>
+        <Text style={styles.title}>Volgende vakantie</Text>
+        <Text style={styles.subtitle}>{next.vacation.type}</Text>
+        <Text style={styles.regionLabel}>Regio: {region}</Text>
 
-      <Image source={{ uri: imageUri }} style={styles.image} />
+        <Text style={styles.count}>Nog {daysLeft} dagen tot</Text>
+        <Text style={styles.date}>
+          {formatDate(next.regionData.startdate)} - {formatDate(next.regionData.enddate)}
+        </Text>
 
-
-      <Text style={styles.count}>Nog {daysLeft} dagen tot</Text>
-      <Text style={styles.date}>
-        {formatDate(next.regionData.startdate)} - {formatDate(next.regionData.enddate)}
-      </Text>
-
-
-      <Text style={styles.note}>Schooljaar: {data?.content?.[0]?.schoolyear}</Text>
+        <Text style={styles.note}>Schooljaar: {data?.content?.[0]?.schoolyear}</Text>
+      </View>
     </View>
   );
 }
@@ -77,6 +78,21 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 16,
     alignItems: 'center',
+  },
+  containerLandscape: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 24,
+  },
+  infoPanel: {
+    alignItems: 'center',
+    width: '100%',
+  },
+  infoPanelLandscape: {
+    alignItems: 'flex-start',
+    flex: 1,
+    paddingLeft: 20,
   },
   emptyContainer: {
     flex: 1,
@@ -103,6 +119,12 @@ const styles = StyleSheet.create({
     height: 180,
     marginBottom: 12,
     borderRadius: 12,
+  },
+  imageLandscape: {
+    flex: 1,
+    maxWidth: 360,
+    height: 210,
+    marginBottom: 0,
   },
   count: {
     fontSize: 20,

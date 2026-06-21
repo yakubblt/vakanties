@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, TouchableOpacity, useWindowDimensions } from 'react-native';
 import { getSchoolYears } from '../data/holidayData';
 
 
@@ -8,60 +8,68 @@ const regions = ['noord', 'midden', 'zuid', 'heel Nederland'];
 
 
 export default function SettingsScreen({ region, schoolYear, onRegionChange, onYearChange, onLocate }) {
+  const window = useWindowDimensions();
+  const isLandscape = window.width > window.height;
+
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={[styles.container, isLandscape && styles.containerLandscape]}>
       <Text style={styles.title}>Instellingen</Text>
       
     
       <Text style={styles.label}>Huidige regio: {region}</Text>
       
     
-      <TouchableOpacity style={styles.gpsButton} onPress={onLocate}>
+      <TouchableOpacity style={[styles.gpsButton, isLandscape && styles.gpsButtonLandscape]} onPress={onLocate}>
         <Text style={styles.gpsText}>Bepaal regio met GPS</Text>
       </TouchableOpacity>
 
-     
-      <Text style={styles.label}>Regio handmatig kiezen</Text>
-      <View style={styles.buttonRow}>
-        {regions.map((value) => (
-          <TouchableOpacity
-            key={value}
-            
+      <View style={[styles.sections, isLandscape && styles.sectionsLandscape]}>
+        <View style={styles.section}>
+          <Text style={styles.label}>Regio handmatig kiezen</Text>
+          <View style={styles.buttonRow}>
+            {regions.map((value) => (
+              <TouchableOpacity
+                key={value}
+                style={[styles.optionButton, region === value && styles.optionButtonActive]}
+                onPress={() => onRegionChange(value)} 
+              >
+                <Text style={[styles.optionText, region === value && styles.optionTextActive]}>
+                  {value}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
-            style={[styles.optionButton, region === value && styles.optionButtonActive]}
-            onPress={() => onRegionChange(value)} 
-          >
-            <Text style={[styles.optionText, region === value && styles.optionTextActive]}>
-              {value}
-            </Text>
-          </TouchableOpacity>
-        ))}
+        <View style={styles.section}>
+          <Text style={styles.label}>Schooljaar</Text>
+          <View style={styles.buttonRow}>
+            {years.map((value) => (
+              <TouchableOpacity
+                key={value}
+                style={[styles.optionButton, schoolYear === value && styles.optionButtonActive]}
+                onPress={() => onYearChange(value)} 
+              >
+                <Text style={[styles.optionText, schoolYear === value && styles.optionTextActive]}>
+                  {value}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
       </View>
-
-      <Text style={styles.label}>Schooljaar</Text>
-      <View style={styles.buttonRow}>
-        {years.map((value) => (
-          <TouchableOpacity
-            key={value}
-           
-
-            style={[styles.optionButton, schoolYear === value && styles.optionButtonActive]}
-            onPress={() => onYearChange(value)} 
-          >
-            <Text style={[styles.optionText, schoolYear === value && styles.optionTextActive]}>
-              {value}
-            </Text>
-          </TouchableOpacity>
-        ))}
-      </View>
-    </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     padding: 16,
-    flex: 1,
+    flexGrow: 1,
+  },
+  containerLandscape: {
+    paddingHorizontal: 24,
+    paddingBottom: 20,
   },
   title: {
     fontSize: 22,
@@ -79,6 +87,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 16,
   },
+  gpsButtonLandscape: {
+    maxWidth: 360,
+  },
   gpsText: {
     color: '#fff',
     textAlign: 'center',
@@ -87,6 +98,17 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+  sections: {
+    flexDirection: 'column',
+  },
+  sectionsLandscape: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  section: {
+    flex: 1,
+    marginRight: 12,
   },
   optionButton: {
     borderWidth: 1,

@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, useWindowDimensions } from 'react-native';
 
 const screens = [
   { key: 'overview', label: 'Overzicht' },
@@ -9,14 +9,17 @@ const screens = [
 
 
 export default function BottomNav({ selected, onChange }) {
+  const window = useWindowDimensions();
+  const isLandscape = window.width > window.height;
+
   return (
-    <View style={styles.navBar}>
+    <View style={[styles.navBar, isLandscape && styles.navBarLandscape]}>
       
       {screens.map((screen) => (
         <TouchableOpacity
           key={screen.key}
           
-          style={[styles.button, selected === screen.key && styles.buttonActive]}
+          style={[styles.button, isLandscape && styles.buttonLandscape, selected === screen.key && styles.buttonActive]}
          
           onPress={() => onChange(screen.key)}
         >
@@ -38,10 +41,16 @@ const styles = StyleSheet.create({
     borderColor: '#ddd',
     backgroundColor: '#fafafa',
   },
+  navBarLandscape: {
+    paddingVertical: 4,
+  },
   button: {
     flex: 1, 
     paddingVertical: 10,
     alignItems: 'center',
+  },
+  buttonLandscape: {
+    paddingVertical: 7,
   },
   buttonActive: {
   
