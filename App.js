@@ -9,7 +9,6 @@ import CountdownScreen from './src/screens/CountdownScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import AboutScreen from './src/screens/AboutScreen';
 import { getHolidayData } from './src/data/holidayData';
-import apiData from './src/data/api-mobile.json'; // Importeer de lokale API-data
 
 // Instellingen die we opslaan
 const STORAGE_KEY = 'vakantieSettings';
@@ -49,39 +48,33 @@ export default function App() {
   const window = useWindowDimensions();
   const isLandscape = window.width > window.height;
 
-  // Effect: Laad instellingen en vakantiedata bij app-start
+  
   useEffect(() => {
-    async function loadSettings() {
+    async function loadAppData() {
       try {
-        // Haal opgeslagen instellingen op
         const saved = await AsyncStorage.getItem(STORAGE_KEY);
+        let nextRegion = defaultRegion;
+        let nextSchoolYear = defaultYear;
+
         if (saved) {
           const parsed = JSON.parse(saved);
-          setRegion(parsed.region || defaultRegion);
-          setSchoolYear(parsed.schoolYear || defaultYear);
+          nextRegion = parsed.region || defaultRegion;
+          nextSchoolYear = parsed.schoolYear || defaultYear;
         }
-      } catch (error) {
-        console.log('Fout bij laden instellingen:', error);
-      }
-    }
 
-    async function fetchHolidayData() {
-      try {
-        // Laad data van lokaal JSON-bestand (api-mobile.json)
-        setHolidays(apiData);
+        setRegion(nextRegion);
+        setSchoolYear(nextSchoolYear);
+        setHolidays(getHolidayData(nextSchoolYear));
       } catch (error) {
-        console.log('Fout bij laden vakantiedata:', error);
-        // Fallback naar hardcoded data als het misgaat
+        console.log('Fout bij laden app-data:', error);
         setHolidays(getHolidayData(defaultYear));
       } finally {
-        // App klaar met laden
         setLoading(false);
       }
     }
 
-    loadSettings(); // Laad vorige instellingen
-    fetchHolidayData(); // Laad vakantiedata
-  }, []); // [] = alleen bij app-start
+    loadAppData(); 
+  }, []); 
 
   // Effect: Sla instellingen op wanneer ze veranderen
   useEffect(() => {
@@ -97,8 +90,12 @@ export default function App() {
       }
     }
 
+    if (loading) {
+      return;
+    }
+
     saveSettings();
-  }, [region, schoolYear]); // Sla op wanneer regio of jaar verandert
+  }, [region, schoolYear, loading]); // Sla op wanneer regio of jaar verandert
 
   // Functie: Bepaal regio automatisch via GPS
   async function handleLocatePress() {
@@ -132,7 +129,7 @@ export default function App() {
     setHolidays(getHolidayData(value));
   }
 
-  // Functie: Kies welk scherm te tonen
+ 
   function renderScreen() {
     if (currentScreen === 'overview') {
       return <OverviewScreen data={holidays} region={region} />;

@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { getSchoolYears } from '../data/holidayData';
 
 
-const years = ['2025-2026', '2024-2025'];
+const years = getSchoolYears();
 
 const regions = ['noord', 'midden', 'zuid', 'heel Nederland'];
 

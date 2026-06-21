@@ -32,7 +32,6 @@ export default function OverviewScreen({ data, region }) {
              
               <Text style={styles.regionName}>{regionItem.region}</Text>
               
-            \
               <Text>
                 {formatDate(regionItem.startdate)} - {formatDate(regionItem.enddate)}
               </Text>
